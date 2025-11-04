@@ -327,6 +327,26 @@ python evaluate.py --experiment ml-openai
 python evaluate.py --experiment llm
 ```
 
+## 🎬 Demo: Novel Item Classification
+
+Classify novel items using the LLM approach with the full dataset:
+
+```bash
+python demo_novel.py
+```
+
+**What it does:**
+- Loads the entire dataset (no train/test split)
+- Builds a semantic index with OpenAI embeddings
+- Classifies 4 novel items:
+  - `"Coca Cola 300ml"`
+  - `"iPhone 15 plan"`
+  - `"Elevator repair"`
+  - `"Fresh salmon 2kg"`
+- Shows retrieved similar examples, predictions, confidence scores, and reasoning
+
+**Output:** Logs show retrieved examples, predictions, and LLM reasoning for each novel item.
+
 ## 📖 Documentation
 
 - **Detailed Results:** [`results/README.md`](results/README.md) - Complete evaluation analysis

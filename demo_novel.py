@@ -7,7 +7,7 @@ to classify novel items that may not appear in the training data.
 import logging
 from typing import Dict, Any, List
 from ap_ai_classifier.core import load_and_prepare_data
-from ap_ai_classifier.models.llm.pipeline import make_langchain_chain, RetrievalLLMClassifierLC
+from ap_ai_classifier.models.llm.pipeline import build_langchain_chain, RetrievalLLMClassifierLC
 from ap_ai_classifier.retrieval import SemanticIndex
 from ap_ai_classifier.core.preprocessing import normalize_text
 
@@ -153,7 +153,7 @@ def main():
     
     # Build LLM classifier chain
     logger.info("\n🔗 Building LLM classifier chain...")
-    chain = make_langchain_chain(index, label_vocab)
+    chain = build_langchain_chain(index, label_vocab)
     classifier = RetrievalLLMClassifierLC(chain)
     logger.info("   Classifier ready!")
     

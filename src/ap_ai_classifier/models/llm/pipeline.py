@@ -379,7 +379,7 @@ TC: <label>"""
     return [results[i] for i in range(len(texts))]
 
 
-def make_langchain_chain(index: SemanticIndex, label_vocab: Dict[str, list]):
+def build_langchain_chain(index: SemanticIndex, label_vocab: Dict[str, list]):
     """
     Build a LC chain with OpenAI embeddings for retrieval.
     Uses minimal reasoning effort for reasoning models.
@@ -466,7 +466,7 @@ def evaluate_llm_pipeline():
     
     # Build LC chain and classifier
     logger.info("\n🔗 Building LangChain pipeline...")
-    chain = make_langchain_chain(index, label_vocab)
+    chain = build_langchain_chain(index, label_vocab)
     clf = RetrievalLLMClassifierLC(chain)
     logger.info("   Pipeline ready!")
     

@@ -1,7 +1,7 @@
 """LLM-related components for classification."""
 from ap_ai_classifier.models.llm.pipeline import (
-    make_langchain_chain, 
-    APClassification, 
+    build_langchain_chain,
+    APClassification,
     RetrievalLLMClassifierLC,
     predict_batch_threaded,
     evaluate_llm_pipeline
@@ -15,7 +15,7 @@ from ap_ai_classifier.models.llm.prompts import (
 from ap_ai_classifier.models.llm.metrics import evaluate_llm_classifier
 
 __all__ = [
-    'make_langchain_chain',
+    'build_langchain_chain',
     'APClassification',
     'RetrievalLLMClassifierLC',
     'predict_batch_threaded',
