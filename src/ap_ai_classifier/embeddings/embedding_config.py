@@ -3,8 +3,7 @@ Configuration for OpenAI embedding models.
 Centralized settings for vector embedding operations.
 """
 import os
-from dataclasses import dataclass, field, asdict
-from typing import Dict, Any
+from dataclasses import dataclass, field
 
 
 def _env_bool(key: str, default: str = "false") -> bool:
@@ -22,20 +21,11 @@ class EmbeddingConfig:
     # Model configurations
     openai_model: str = field(default_factory=lambda: os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"))
 
-    # Cache configuration (simplified - no Redis for now)
-    cache_prefix: str = "embeddings_similarity"
-    cache_expiration_seconds: int = int(os.getenv("EMBEDDING_CACHE_EXPIRATION", str(60 * 60 * 24 * 30)))
-
-    # Similarity thresholds
-    high_similarity_threshold: float = float(os.getenv("HIGH_SIMILARITY_THRESHOLD", "0.55"))
-    medium_similarity_threshold: float = float(os.getenv("MEDIUM_SIMILARITY_THRESHOLD", "0.35"))
-
     # Vector dimensions
     openai_embedding_dim: int = 1536
 
     # Performance settings
     batch_size: int = int(os.getenv("EMBEDDING_BATCH_SIZE", "100"))
-    max_text_length: int = 8192
 
     # OpenAI API retry and timeout configuration
     max_retries: int = int(os.getenv("EMBEDDING_MAX_RETRIES", "6"))
@@ -43,7 +33,7 @@ class EmbeddingConfig:
     retry_min_seconds: int = int(os.getenv("EMBEDDING_RETRY_MIN_SECONDS", "1"))
     retry_max_seconds: int = int(os.getenv("EMBEDDING_RETRY_MAX_SECONDS", "20"))
 
-    # Concurrency control (simplified - no semaphores)
+    # Concurrency control
     max_concurrency: int = int(os.getenv("EMBEDDING_MAX_CONCURRENCY", "5"))
 
     # Logging
@@ -68,31 +58,6 @@ class EmbeddingConfig:
 
     def get_embedding_dimension(self) -> int:
         return self.embedding_dimension
-
-    def to_dict(self) -> Dict[str, Any]:
-        """Return a logging-friendly flattened dict."""
-        base = asdict(self)
-        base.update({
-            "model_name": self.model_name,
-            "embedding_dimension": self.embedding_dimension,
-            "cache_expiration_hours": self.cache_expiration_seconds // 3600,
-            "thresholds": {
-                "high_similarity": self.high_similarity_threshold,
-                "medium_similarity": self.medium_similarity_threshold,
-            },
-            "retry_config": {
-                "max_retries": self.max_retries,
-                "request_timeout": self.request_timeout,
-                "retry_min_seconds": self.retry_min_seconds,
-                "retry_max_seconds": self.retry_max_seconds,
-            },
-        })
-        return base
-
-    @classmethod
-    def from_environment(cls) -> "EmbeddingConfig":
-        """Return a new instance using environment variables."""
-        return cls()
 
 
 # Default configuration instance
