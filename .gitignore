@@ -40,7 +40,9 @@ env/
 .ipynb_checkpoints
 *.ipynb
 
-# data files
+# Artifacts
+artifacts/
+*.csv
 !data/line_items.csv
 
 # MacOS
